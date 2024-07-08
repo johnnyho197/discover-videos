@@ -1,11 +1,10 @@
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 import React, {useEffect} from "react";
-import {magic} from "@/lib/magic-client";
+import {magic} from "../lib/magic-client";
 import {useRouter} from "next/router";
-import Loading from "@/components/loading/loading";
+import Loading from "../components/loading/loading";
 
-export default function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -25,22 +24,20 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const handleLoggedIn = async () => {
-      if (magic && typeof magic.user !== 'undefined') { // Type guard to check if magic and magic.user exist
-        const isLoggedIn = await magic.user.isLoggedIn();
-        if (isLoggedIn) {
-          // route to /
-          router.push("/");
-        }
+      const isLoggedIn = await magic.user.isLoggedIn();
+      if (isLoggedIn) {
+        // route to /
+        router.push("/");
       } else {
-        // Handle the case where magic or magic.user is not available
+        // route to /login
         router.push("/login");
-        console.error('Magic user is not available.');
       }
     };
-
     handleLoggedIn();
-  }, [router]);
+  }, []);
 
   return isLoading? <Loading/>
       : <Component {...pageProps} />;
 }
+
+export default MyApp;
