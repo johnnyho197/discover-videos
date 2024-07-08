@@ -19,7 +19,6 @@ export async function getServerSideProps(context) {
 }
 const MyList = ({myListVideos}) => {
 
-    console.log(myListVideos)
     return (
         <div>
             <Head>
