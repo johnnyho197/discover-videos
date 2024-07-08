@@ -26,10 +26,8 @@ function MyApp({ Component, pageProps }) {
     const handleLoggedIn = async () => {
       const isLoggedIn = await magic.user.isLoggedIn();
       if (isLoggedIn) {
-        // route to /
         router.push("/");
       } else {
-        // route to /login
         router.push("/login");
       }
     };
