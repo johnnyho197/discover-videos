@@ -25,15 +25,19 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const handleLoggedIn = async () => {
-      const isLoggedIn = await magic.user.isLoggedIn();
-      if (isLoggedIn) {
-        // route to /
-        router.push("/");
+      if (magic && typeof magic.user !== 'undefined') { // Type guard to check if magic and magic.user exist
+        const isLoggedIn = await magic.user.isLoggedIn();
+        if (isLoggedIn) {
+          // route to /
+          router.push("/");
+        }
       } else {
-        // route to /login
+        // Handle the case where magic or magic.user is not available
         router.push("/login");
+        console.error('Magic user is not available.');
       }
     };
+
     handleLoggedIn();
   }, []);
 
