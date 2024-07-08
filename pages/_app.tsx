@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
     };
 
     handleLoggedIn();
-  }, []);
+  }, [router]);
 
   return isLoading? <Loading/>
       : <Component {...pageProps} />;
